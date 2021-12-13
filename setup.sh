@@ -9,7 +9,7 @@ FILES=.[^.]*
 for f in $FILES
 do
   echo "Copying $f ..."
-  cp $f ~$f
+  cp $f ~/$f
 done
 
 cd ..
