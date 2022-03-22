@@ -60,7 +60,6 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   gitfast
-  colorize
   colored-man-pages
 )
 
@@ -94,18 +93,20 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-unalias gm
-alias gcm='git checkout $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)'
+alias g='git'
+alias gs='git switch'
+alias gb='git checkout -b'
+alias gcb='git checkout -b'
+alias gcm='git switch $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)'
+alias grm='git rebase $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)'
+alias grim='git rebase -i $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)'
 
+# Added by dev
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
-export PKG_CONFIG_PATH="/usr/local/opt/imagemagick@6/lib/pkgconfig:$PKG_CONFIG_PATH"
-if [ -e /Users/sander/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/sander/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
 export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/sander/.kube/config:/Users/sander/.kube/config.shopify.cloudplatform
-for file in /Users/sander/src/github.com/shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
+for file in /Users/sander/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
 kubectl-short-aliases
-
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
-
-[[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
